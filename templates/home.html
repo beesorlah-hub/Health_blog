@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="page-container">
+        <div class="page-content"> 
+            <hr> 
+            <div class="row">
+                {% for post in object_list %}
+                    <div class="col-lg-6 mb-5">
+                        <div class="card text-center h-100">
+                            <div class="card-header p-0">                                   
+                                <div class="blog-media position-relative">
+                                    <img src="{% static 'blog/imgs/blog-2.jpg' %}" alt="" class="w-100">
+                                    <a href="{% url 'category' post.category %}" class="badge badge-primary position-absolute" style="top: 10px; left: 10px;">{{ post.category }}</a>
+                                </div>  
+                            </div>
+                            <div class="card-body px-3" >
+                                <h5 class="card-title mb-2">{{post.title }}</h5>    
+                                <small class="small text-muted">
+                                    {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.date_created }}
+                                    <span class="px-2">-</span>
+                                    <a href="#" class="text-muted">{{ post.total_likes }} Likes</a>
+                                </small>
+                                <small>
+                                    {% if user.is_authenticated %}
+                                        {% if user.id == post.author.id %}
+                                            - <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+                                            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </small>
+                                <p class="my-2"> {{ post.body|slice:":200"|safe }}...</p>
+                            </div>
+                            <div class="card-footer p-0 text-center">
+                                <a href="{% url 'article-detail' post.pk %}" class="btn btn-outline-dark btn-sm">READ MORE</a>
+                            </div>                  
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+                        </div><div class="row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+                <!-- Pagination Controls -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">First</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                        {% endif %}
+    
+                        <li class="page-item disabled">
+                            <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                        </li>
+    
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">Next</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">Last</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+            <!-- Sidebar -->
+             
+        
+            <h6 class="column-row">Your Health</h6>
+            <div class="row px-3">
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-1.png' %}" alt="">
+                    </a>
+                </div>
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-2.png' %}" alt="" class="w-100 m-0">
+                    </a>
+                </div>  
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-3.png' %}" alt="" class="w-100">
+                    </a>
+                </div>
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-4.png' %}" alt="" class="w-100 m-0">
+                    </a>
+                </div>  
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-5.png'%}" alt="" class="w-100">
+                    </a>
+                </div>
+                <div class="col-4 p-1 figure">
+                    <a href="#" class="figure-img">
+                        <img src="{% static 'blog/imgs/insta-6.png'%}" alt="" class="w-100 m-0">
+                    </a>
+                </div>                          
+            </div>  
+        
+                       
+
+
+            
+
+</div>
+</body>
+</div>
+
+
+
+
+
+{% endblock %}

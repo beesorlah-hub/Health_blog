@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with JoeBLog landing page.">
+    <meta name="author" content="Devcrud">
+    <title>{% block title %} Health Blog</title>{% endblock %}
+    <!-- font icons -->
+    <link rel="stylesheet" href="{% static 'blog/vendors/themify-icons/css/themify-icons.css' %} ">
+
+    <!-- old footer -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- end of old footer -->
+
+    <!-- Bootstrap + JoeBLog main styles -->
+	<link rel="stylesheet" href="{% static 'blog/css/joeblog.css' %}">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<div class="navbar navbar-light bg-light">
+    <div class="container d-flex justify-content-between align-items-center">
+        <!-- Image and Blog Title -->
+        <div class="d-flex align-items-center">
+            <img src="{% static 'blog/imgs/output_1000992351_0.png' %}" alt="Health Blog" style="max-width: 100px; height: auto; margin-right: 10px;">
+            <a class="navbar-brand" href="{% url 'home' %}">Health Blog</a>
+        </div>
+
+        
+        <!-- Social Icons -->
+        <div class="socials d-flex">
+            <a href="javascript:void(0)" class="me-2"><i class="ti-facebook"></i></a>
+            <a href="javascript:void(0)" class="me-2"><i class="ti-twitter"></i></a>
+            <a href="javascript:void(0)" class="me-2"><i class="ti-pinterest-alt"></i></a>
+            <a href="javascript:void(0)" class="me-2"><i class="ti-instagram"></i></a>
+            <a href="javascript:void(0)" class="me-2"><i class="ti-youtube"></i></a>
+        </div>
+    </div>
+</div>
+
+
+    
+
+    <!-- Page Second Navigation -->
+    <nav class="navbar custom-navbar navbar-expand-md navbar-light bg-primary sticky-top">
+        <div class="container">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">                     
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Health Blog </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_post' %}">Add post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_category' %}">Add category</a>
+                    </li>
+                    <li class="nav-item">
+                      <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none; background: none;">Logout</button>
+                      </form>
+                    </li> 
+                    {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'register' %}">Register</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                 </li> 
+                    {% endif %}
+                    <!-- category menu code  -->
+                      {% if cat_menu %}
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for item in cat_menu %}
+                            <a class="dropdown-item" href="{% url 'category' item %}">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% endif %}
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Of Page Second Navigation -->
+    
+
+      {% block content %}
+
+      {% endblock %}
+    
+
+
+
+
+
+    <footer class="" >
+      <ul class="nav justify-content-center border-bottom"  style="margin-top: 60px;">
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="{% url 'add_category' %}" class="nav-link px-2 text-muted">Category</a></li>
+        <li class="nav-item"><a href="{% url 'faqs' %}" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="{% url 'about' %}" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+      <p class="text-center text-muted">&copy; Bee 2024</p>
+    </footer>
+
+</main>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- old js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+	<!-- core  -->
+<script src="{% static 'blog/vendors/jquery/jquery-3.4.1.js' %}"></script>
+<script src="{% static 'blog/vendors/bootstrap/bootstrap.bundle.js' %}"></script>
+
+  <!-- JoeBLog js -->
+<!-- <script src="{% static 'blog/js/joeblog.js' % }"></script> -->
+
+
+</body>
+</html>
+
+<!-- {% static 'imgs/avatar-1.jpg' %} -->
+
+
+
+
+
+
+
+
+    
+    
