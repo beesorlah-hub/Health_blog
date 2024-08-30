@@ -1,4 +1,6 @@
 import os
+import dj_database_url
+import environ
 """
 Django settings for Web project.
 
@@ -12,7 +14,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,15 +84,29 @@ WSGI_APPLICATION = 'Web.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+env = environ.Env()
+
+environ.Env.read_env()
+
+ 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER' : config('DB_USER'),
-        'PASSWORD' : config('DB_PASSWORD'), 
-        'HOST' : config('DB_HOST'),
-    }
+    'default' : dj_database_url.parse(env('DATABASE_URL'))
 }
+
+
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER' : config('DB_USER'),
+#         'PASSWORD' : config('DB_PASSWORD'), 
+#         'HOST' : config('DB_HOST'),
+#     }
+# }
 
 
 # Password validation
